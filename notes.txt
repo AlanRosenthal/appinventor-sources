@@ -1,4 +1,4 @@
-//blockly/editor/src/generators/yail/controls.js
+//blocklyeditor/src/generators/yail/controls.js
 Blockly.Yail.controls_forRange = function() {
   // For range loop.
   var loopIndexName = Blockly.Yail.YAIL_LOCAL_VAR_TAG + this.getTitleValue('VAR');
@@ -23,9 +23,52 @@ Blockly.Yail.controls_forRange = function() {
   return "(forrange " + loopIndexName + " " + "(begin " + bodyCode + ")" + " " + startCode + " " + endCode + " " + stepCode + ")";
   //return (forrange $VAR (begin DO) START END STEP)
 };
-///buildserver/src/com/google/appinventor/buildserver/resources/runtime.scm
+
+//buildserver/src/com/google/appinventor/buildserver/resources/runtime.scm
 (define-syntax forrange
   (syntax-rules ()
     ((_ lambda-arg-name body-form start end step)
      (yail-for-range (lambda (lambda-arg-name) body-form) start end step))))
+;; yail-for-range needs to check that its args are numeric
+;; because the blocks editor can't guarantee this
+(define (yail-for-range proc start end step)
+  (let ((nstart (coerce-to-number start))
+        (nend (coerce-to-number end))
+        (nstep (coerce-to-number step)))
+    (if (eq? nstart *non-coercible-value*)
+        (signal-runtime-error
+         (format #f "For range: the start value -- ~A -- is not a number" (get-display-representation start))
+         "Bad start value"))
+    (if (eq? nend *non-coercible-value*)
+        (signal-runtime-error
+         (format #f "For range: the end value -- ~A -- is not a number" (get-display-representation end))
+         "Bad end value"))
+    (if (eq? nstep *non-coercible-value*)
+        (signal-runtime-error
+         (format #f "For range: the step value -- ~A -- is not a number" (get-display-representation step))
+         "Bad step value"))
+    (yail-for-range-with-numeric-checked-args proc nstart nend nstep)))
+(define (yail-for-range-with-numeric-checked-args proc start end step)
+  (cond ((and (= step 0) (= start end)) (proc start))
+        ((or (and (< start end) (<= step 0))
+             (and (> start end) (>= step 0))
+             (and (not (= start end)) (= step 0)))
+         (signal-runtime-error
+          (string-append
+           "FOR RANGE was called with a start of "
+           (number->string start)
+           " and an end of "
+           (number->string end)
+           " and a step of "
+           (number->string step)
+           ". This would run forever.")
+          "Bad inputs to FOR RANGE"))
+        (else
+         (let ((stop-comparison
+                (if (< step 0) < >)))
+           (let loop ((i start))
+             (if (stop-comparison i end)
+                 *the-null-value*
+                 (begin (proc i)
+                        (loop (+ i step)))))))))
 
