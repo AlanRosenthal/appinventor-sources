@@ -29,3 +29,11 @@ Blockly.Yail.controls_forRange = function() {
     ((_ lambda-arg-name body-form start end step)
      (yail-for-range (lambda (lambda-arg-name) body-form) start end step))))
 
+
+
+appinventor/components/src / components.commons /  ComponetCategory.java -> this is where you add the iSENSE pallette
+
+appinventor/components/src / components.runtime -> this is where the java files live that are somehow attached to palettes
+
+
+

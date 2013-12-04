@@ -1,5 +1,6 @@
 cd ../appinventor/
-ant clean
+#ant clean
+ant installplay
 aiDaemon &
 ant
 beep -l 500
