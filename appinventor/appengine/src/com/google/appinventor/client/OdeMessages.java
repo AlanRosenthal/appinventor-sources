@@ -4921,6 +4921,67 @@ public interface OdeMessages extends Messages {
   @Description("")
   String RequestTranslationMethods();
 
+  // iSENSE
+
+  @DefaultMessage("ContributorKey")
+  @Description("")
+  String ContributorKeyProperties();
+
+  @DefaultMessage("Email")
+  @Description("")
+  String EmailProperties();
+
+  @DefaultMessage("LoginType")
+  @Description("")
+  String LoginTypeProperties();
+
+  @DefaultMessage("Password")
+  @Description("")
+  String PasswordProperties();
+
+  @DefaultMessage("ProjectID")
+  @Description("")
+  String ProjectIDProperties();
+
+  @DefaultMessage("YourName")
+  @Description("")
+  String YourNameProperties();
+
+  @DefaultMessage("UploadDataSetFailed")
+  @Description("")
+  String UploadDataSetFailedEvents();
+
+  @DefaultMessage("UploadDataSetSucceeded")
+  @Description("")
+  String UploadDataSetSucceededEvents();
+
+  @DefaultMessage("UploadPhotoToDataSetFailed")
+  @Description("")
+  String UploadPhotoToDataSetFailedEvents();
+
+  @DefaultMessage("UploadPhotoToDataSetSucceeded")
+  @Description("")
+  String UploadPhotoToDataSetSucceededEvents();
+
+  @DefaultMessage("GetDataSetsByField")
+  @Description("")
+  String GetDataSetsByFieldMethods();
+
+  @DefaultMessage("GetTime")
+  @Description("")
+  String GetTimeMethods();
+
+  @DefaultMessage("LogToCat")
+  @Description("")
+  String LogToCatMethods();
+
+  @DefaultMessage("UploadDataSet")
+  @Description("")
+  String UploadDataSetMethods();
+
+  @DefaultMessage("UploadPhotoToDataSet")
+  @Description("")
+  String UploadPhotoToDataSetMethods();
 
   //Mock Components
   @DefaultMessage("add items...")
