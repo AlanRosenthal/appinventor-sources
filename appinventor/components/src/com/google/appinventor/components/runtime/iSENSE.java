@@ -28,6 +28,7 @@ import com.google.appinventor.components.runtime.util.AsynchUtil;
 import com.google.appinventor.components.runtime.util.YailList;
 
 import edu.uml.cs.isense.api.API;
+import edu.uml.cs.isense.api.UploadInfo;
 import edu.uml.cs.isense.objects.RDataSet;
 import edu.uml.cs.isense.objects.RPerson;
 import edu.uml.cs.isense.objects.RProjectField;
@@ -165,17 +166,19 @@ public class iSENSE extends AndroidNonvisibleComponent implements Component {
             UploadDataSetResult(-1);
             return;
           }
-          dataset = api.uploadDataSet(ProjectID, jData, DataSetName);
+          UploadInfo ui = api.uploadDataSet(ProjectID, jData, DataSetName);
+          dataset = ui.dataSetId;// 
           // login with contribution key
         } else if (LoginType == iSENSE_LOGIN_TYPE_KEY) {
           Calendar cal = Calendar.getInstance();
           SimpleDateFormat sdf = new SimpleDateFormat("MMMM dd, yyyy HH:mm:ss aaa");
           String date = " - " + sdf.format(cal.getTime()).toString();
-          dataset = api.uploadDataSet(ProjectID,
-              DataSetName + date,
-              jData,
+          UploadInfo ui = api.uploadDataSet(ProjectID,
+    		  jData,
+    		  DataSetName + date,
               ContributorKey,
               YourName);
+          dataset = ui.dataSetId;
         }
         Log.i("iSENSE", "JSON Upload: " + jData.toString());
         Log.i("iSENSE", "Dataset ID: " + dataset);
@@ -268,14 +271,16 @@ public class iSENSE extends AndroidNonvisibleComponent implements Component {
             UploadPhotoToDataSetResult(-1);
             return;
           }
-          mediaid = api.uploadMedia(DataSetID, pic, API.TargetType.DATA_SET);
+          UploadInfo ui = api.uploadMedia(DataSetID, pic, API.TargetType.DATA_SET);
+          mediaid = ui.mediaId;
           // login with contribution key
         } else if (LoginType == iSENSE_LOGIN_TYPE_KEY) {
-          mediaid = api.uploadMedia(DataSetID,
-              pic,
-              API.TargetType.DATA_SET,
-              ContributorKey,
-              YourName);
+        	UploadInfo ui = api.uploadMedia(DataSetID,
+        		pic,
+        		API.TargetType.DATA_SET,
+        		ContributorKey,
+    			YourName);
+        	mediaid = ui.mediaId;
         }
         Log.i("iSENSE", "MediaID: " + mediaid);
         UploadPhotoToDataSetResult(mediaid);

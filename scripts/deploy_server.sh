@@ -1,8 +1,8 @@
 #!/bin/bash
 
 appinventor=~/Documents/appinventor-sources/appinventor
-appengine=~/Documents/appengine/appengine-java-sdk-1.8.7
-appenginename=isense-ai2
+appengine=~/Documents/appengine/appengine-java-sdk-1.9.15
+appenginename=isense-project
 
 cd $appinventor
 
